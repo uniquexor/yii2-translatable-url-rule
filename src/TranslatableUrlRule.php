@@ -1,6 +1,6 @@
 <?php
 
-namespace geertw\Yii2\TranslatableUrlRule;
+namespace unique\yii2translatableurlrule;
 
 use Yii;
 use yii\base\InvalidConfigException;
@@ -25,6 +25,13 @@ class TranslatableUrlRule extends BaseObject implements UrlRuleInterface {
      * @var string Route
      */
     public $route;
+
+    /**
+     * @var array the default GET parameters (name => value) that this rule provides.
+     * When this rule is used to parse the incoming request, the values declared in this property
+     * will be injected into $_GET.
+     */
+    public $defaults = [];
 
     /**
      * @var UrlRule[] Conventional URL rule objects, key is language ID
@@ -64,7 +71,7 @@ class TranslatableUrlRule extends BaseObject implements UrlRuleInterface {
      */
     protected function updateRules() {
         foreach ($this->patterns as $language => $pattern) {
-            $this->rules[$language] = new UrlRule(['pattern' => $pattern, 'route' => $this->route]);
+            $this->rules[$language] = new UrlRule(['pattern' => $pattern, 'route' => $this->route, 'defaults' => $this->defaults]);
         }
     }
 
