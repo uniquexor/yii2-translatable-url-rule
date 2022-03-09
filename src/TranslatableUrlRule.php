@@ -41,7 +41,7 @@ class TranslatableUrlRule extends BaseObject implements UrlRuleInterface {
     /**
      * @var string Parameter for determining which language to use (instead of app language)
      */
-    public $languageParam = 'url-language';
+    public $languageParam = 'language';
 
     /**
      * @var bool If to force search in all language rules
@@ -85,7 +85,7 @@ class TranslatableUrlRule extends BaseObject implements UrlRuleInterface {
     public function parseRequest($manager, $request) {
         $this->updateRules();
 
-        $language = Yii::$app->language;
+        $language = $request->getQueryParam( $this->languageParam, Yii::$app->language );
 
         if (isset($this->rules[$language])) {
             $rule = $this->rules[$language];
